@@ -1,7 +1,7 @@
 'use client'
 
 import { ChangeEvent, useState } from "react";
-import { addScrap, lookupPostcode } from "./actions";
+import { addScrap, performPostcodeLookup } from "./actions";
 
 function debounce(callback: () => void, delay: number) {
     let timeoutId: any;
@@ -30,9 +30,9 @@ const AddScrap = () => {
 
         setValidPostcode(true);
 
-        lookupPostcode(text);
+        const { latitude, longitude }  = await performPostcodeLookup(text);
 
-        setCoordinate('-0,-0');
+        setCoordinate(`${latitude},${longitude}`);
     }
 
     return (

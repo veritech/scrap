@@ -1,14 +1,10 @@
-import { config } from "@/src/database_configuration";
 import { ScrapItem } from "../../../entities/ScrapItem";
-import { DataSource, Repository } from "typeorm";
+import { getSharedDataSource } from "@/src/shared_database_connection";
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: Request) {
-    const dataSource = new DataSource(config);
-
-    await dataSource.initialize();
-
+    const dataSource = await getSharedDataSource()
     const scrapRepo = await dataSource.getRepository(ScrapItem);
 
     const items = await scrapRepo.find({

@@ -1,0 +1,8 @@
+services:
+  postgres:
+    image: "postgres:alpine3.18"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: p@ssw0rd
+    ports:
+      - 5432:5432

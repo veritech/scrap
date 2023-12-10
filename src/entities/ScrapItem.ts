@@ -1,11 +1,11 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn, Relation } from "typeorm"
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Relation } from "typeorm"
 import { User } from "./User";
 
 @Entity()
 export class ScrapItem {
 
-    @PrimaryColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Index()
     @Column({name: 'latitude', type: 'numeric', precision: 5, scale: 2})

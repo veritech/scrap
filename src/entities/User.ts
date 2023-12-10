@@ -1,18 +1,17 @@
-import { CreateDateColumn, Entity, Index, Column, OneToMany, PrimaryColumn } from "typeorm"
+import { CreateDateColumn, Entity, Index, Column, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
 import { ScrapItem } from "./ScrapItem";
 
 @Entity()
 export class User {
-    
-    @PrimaryColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Index({ unique: true })
     @Column({name: 'email', type: 'text'})
     email: string;
 
-    @Column({name: 'is_valdiated', type :'boolean' })
-    isValdiated: boolean;
+    @Column({name: 'is_validated', type :'boolean' })
+    isValidated: boolean;
 
     @OneToMany(() => ScrapItem, (scrapItem) => scrapItem.user)
     scrapItems: ScrapItem[]

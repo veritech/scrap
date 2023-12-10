@@ -24,13 +24,16 @@ export default function RootLayout({
               <Link href="/">Home</Link>
             </li>
             <li>
-              <Link href="/scrap">Scrap</Link>
+              <Link href="/user/login">Login</Link>
             </li>
             <li>
-              <Link href="/login">Login</Link>
+              <Link href="/user/signup">Signup</Link>
             </li>
             <li>
-                <Link href="/add_scrap">Add Scrap</Link>  
+              <Link href="/scrap">Find Scrap</Link>
+            </li>
+            <li>
+                <Link href="/scrap/add">Add Scrap</Link>  
             </li>
           </ul>
         </div>

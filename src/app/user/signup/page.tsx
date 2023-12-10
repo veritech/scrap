@@ -1,10 +1,10 @@
 
-import { validateAndSignin } from './actions';
+import { validateAndCreateUser } from './actions';
 
 const Signup = () => {
 
     return (
-            <form action={validateAndSignin}>
+            <form action={validateAndCreateUser}>
                 <div className="mb-3">
                     <label className="form-label">Email address</label>
                     <input className="form-control" name="email" />
