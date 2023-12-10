@@ -53,8 +53,8 @@ const AddScrap = () => {
                 <div className="mb-4">
                     <label className="form-label">Postcode</label>
                     <input 
-                        className="block border w-96 p-1" 
-                        name="location"
+                        className="block border w-96 p-1"
+                        name="address"
                         style={{
                             backgroundColor: isValidPostcode ? "white" : "red",
                             color: "black"

@@ -8,7 +8,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 
 const OpenStreetMap = (props) => {
   const { children, lat, lng } = props
-  const ZOOM_LEVEL = 10
+  const ZOOM_LEVEL = 17
   const mapRef = useRef()
 
   return (

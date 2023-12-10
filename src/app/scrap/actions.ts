@@ -10,7 +10,8 @@ export interface ScrapDto {
     id: string
     description: string
     latitude: number
-    longitude: number,
+    longitude: number
+    address: string
     createdTime: string | null
 }
 
@@ -20,11 +21,13 @@ const mapEntityToDto = (entity: ScrapItem): ScrapDto => {
         description,
         latitude,
         longitude,
+        address,
         createdTime
     } = entity;
     return {
         id,
         description,
+        address,
         latitude,
         longitude,
         createdTime: DateTime.fromJSDate(createdTime).toISO()
