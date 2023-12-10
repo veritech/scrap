@@ -1,11 +1,11 @@
 
-import OpenStreetMap from './components/open_street_map'
+
 
 export default function Home() {
+
   return (
     <main>
       <div>Scrap App</div>
-      <OpenStreetMap />
     </main>
   )
 }

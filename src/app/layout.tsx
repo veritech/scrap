@@ -24,6 +24,9 @@ export default function RootLayout({
               <Link href="/">Home</Link>
             </li>
             <li>
+              <Link href="/scrap">Scrap</Link>
+            </li>
+            <li>
               <Link href="/login">Login</Link>
             </li>
             <li>
