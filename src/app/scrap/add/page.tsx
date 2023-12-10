@@ -1,13 +1,12 @@
 'use client'
 
 import { ChangeEvent, useState } from "react";
-import { addScrap, performPostcodeLookup } from "./actions";
+import { addScrap, performPostcodeLookup } from "../actions";
 
 function debounce(callback: () => void, delay: number) {
     let timeoutId: any;
   
     return function() {
-        console.log("sdsd")
       clearTimeout(timeoutId);
       timeoutId = setTimeout(callback, delay);
     }
@@ -31,6 +30,8 @@ const AddScrap = () => {
         setValidPostcode(true);
 
         const { latitude, longitude }  = await performPostcodeLookup(text);
+
+        console.log('foo', { latitude, longitude });
 
         setCoordinate(`${latitude},${longitude}`);
     }
