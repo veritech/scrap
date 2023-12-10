@@ -1,4 +1,4 @@
-import { CreateDateColumn, Entity, OneToMany, PrimaryColumn } from "typeorm"
+import { CreateDateColumn, Entity, Index, Column, OneToMany, PrimaryColumn } from "typeorm"
 import { ScrapItem } from "./ScrapItem";
 
 @Entity()

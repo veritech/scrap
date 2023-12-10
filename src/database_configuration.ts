@@ -1,14 +1,29 @@
 import { DataSourceOptions } from "typeorm";
 
+import path from 'path';;
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+import { ScrapItem } from "./entities/ScrapItem";
+import { User } from "./entities/User";
 
 // DataSource
 export const config: DataSourceOptions = {
-    host: "",
-    port: 0,
-    database: '',
+    host: "localhost",
+    port: 5432,
+    database: 'scrap',
+    type: 'postgres',
+    username: 'postgres',
+    password: 'p@ssw0rd',
     synchronize: true,
-    entities: ['src/entities/*.{ts|js}'],
+    entities: [
+        ScrapItem,
+        User
+        // __dirname + '/entities/*.{ts|js}'
+    ],
     migrations: [
-        'src/migrations/*.{ts|js}'
+        __dirname + '/migrations/*.{ts|js}'
     ]
 }

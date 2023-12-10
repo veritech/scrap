@@ -1,4 +1,4 @@
-import { Column, DeleteDateColumn, Entity, Index, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, Relation } from "typeorm"
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn, Relation } from "typeorm"
 import { User } from "./User";
 
 @Entity()
@@ -7,17 +7,19 @@ export class ScrapItem {
     @PrimaryColumn()
     id: number;
 
-    @Column({name: 'latitude', type: 'number'})
+    @Index()
+    @Column({name: 'latitude', type: 'numeric', precision: 5, scale: 2})
     latitude: number;
 
-    @Index
-    @Column({name: 'longitude', type: 'number'})
+    @Index()
+    @Column({name: 'longitude', type: 'numeric', precision: 5, scale: 2})
     longitude: number;
 
     @Column({name: 'description', type: 'text'})
     description: string;
 
     @ManyToOne(() => User, (user) => user.scrapItems)
+    @JoinColumn({ name: 'user_id' })
     user: Relation<User>;
 
     @CreateDateColumn({ name: 'created_time' })
