@@ -20,6 +20,8 @@ const AddScrap = () => {
         const text = evt.target.value;
         // TODO: (Debounce)
 
+        // debounce(() => { console.log("ff")}, 200);
+
         const validator = /[0-z]{2,4}\s*[0-z]{3}/
 
         if (!validator.test(text)) {
@@ -31,39 +33,38 @@ const AddScrap = () => {
 
         const { latitude, longitude }  = await performPostcodeLookup(text);
 
-        console.log('foo', { latitude, longitude });
-
         setCoordinate(`${latitude},${longitude}`);
     }
 
     return (
         <form action={addScrap}>
-            <div className="border-b border-gray-900/10 pb-12">
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <h2 className="bold">Enter the details of your scrap</h2>
+            <div className="mt-2">
+                <div className="mb-4">
                     <label className="form-label">Description</label>
                     <textarea 
-                        className="form-control"
+                        className="block border w-96 p-1"
                         style={{
                             color: "black"
                         }}
                         name="description" 
                     />
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">Location</label>
+                <div className="mb-4">
+                    <label className="form-label">Postcode</label>
                     <input 
-                        className="form-control" 
+                        className="block border w-96 p-1" 
                         name="location"
                         style={{
                             backgroundColor: isValidPostcode ? "white" : "red",
                             color: "black"
                         }}
-                        placeholder="Location of the scrap"
+                        placeholder="Postcode"
                         onChange={locationDidChange}
                     />
                 </div>
                 <input type="hidden" name="coordinate" value={coordinate} />
-                <button className="btn btn-primary">Add Scrap</button>
+                <button className="border p-2 rounded-md bg-slate-600 text-white">Add Scrap</button>
             </div>
         </form>
     )

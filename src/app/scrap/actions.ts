@@ -4,12 +4,14 @@ import { User } from "@/src/entities/User";
 import { getSharedDataSource } from "@/src/shared_database_connection";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { DateTime } from "luxon";
 
 export interface ScrapDto {
     id: string
     description: string
     latitude: number
-    longitude: number
+    longitude: number,
+    createdTime: string | null
 }
 
 const mapEntityToDto = (entity: ScrapItem): ScrapDto => {
@@ -17,14 +19,15 @@ const mapEntityToDto = (entity: ScrapItem): ScrapDto => {
         id,
         description,
         latitude,
-        longitude
+        longitude,
+        createdTime
     } = entity;
-
     return {
         id,
         description,
         latitude,
-        longitude
+        longitude,
+        createdTime: DateTime.fromJSDate(createdTime).toISO()
     }
 }
 
@@ -37,7 +40,20 @@ const parseFloatOrThrow = (input: string): number => {
     return result;
 }
 
-export const getScrap = async (scrapId: string) => {
+export const getScrap = async (take: number = 20, skip: number = 0): Promise<ScrapDto[]> => {
+    const dataSource = await getSharedDataSource()
+    const scrapItemRepo = dataSource.getRepository(ScrapItem);
+    
+    return scrapItemRepo.find({
+        take,
+        skip,
+        order: {
+            createdTime: 'DESC'
+        }
+    }).then(r => r.map(mapEntityToDto))
+}
+
+export const getScrapById = async (scrapId: string): Promise<ScrapDto> => {
     const dataSource = await getSharedDataSource()
     const scrapItemRepo = dataSource.getRepository(ScrapItem);
 
@@ -61,9 +77,11 @@ export const addScrap = async (formData: FormData) => {
 
     const description = formData.get("description");
     const coordinate = formData.get("coordinate");
+    const address = formData.get("address");
 
     if (!description || typeof description !== 'string' ||
-    !coordinate || typeof coordinate !== 'string') {
+    !coordinate || typeof coordinate !== 'string' ||
+    !address || typeof address !== 'string') {
         throw new Error('Invalid input');
     }
 
@@ -77,6 +95,7 @@ export const addScrap = async (formData: FormData) => {
         latitude: parseFloatOrThrow(lat),
         longitude: parseFloatOrThrow(lng),
         description,
+        address,
         user
     })
 

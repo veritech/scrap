@@ -18,13 +18,16 @@ export class ScrapItem {
     @Column({name: 'description', type: 'text'})
     description: string;
 
+    @Column({name: 'address', type: 'text'})
+    address: string;
+
     @ManyToOne(() => User, (user) => user.scrapItems)
     @JoinColumn({ name: 'user_id' })
     user: Relation<User>;
 
     @CreateDateColumn({ name: 'created_time' })
-    created_time: Date;
+    createdTime: Date;
 
     @DeleteDateColumn({name: 'deleted_time'})
-    deleted_time: Date;
+    deletedTime: Date;
 }

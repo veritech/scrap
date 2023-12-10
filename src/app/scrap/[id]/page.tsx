@@ -1,9 +1,10 @@
 'use client'
 import { useEffect, useMemo, useState } from "react";
 // import OpenStreetMap from "../../components/open_street_map";
-import { ScrapDto, getScrap } from "../actions";
+import { ScrapDto, getScrapById } from "../actions";
 import { Marker, Popup } from "react-leaflet";
 import dynamic from "next/dynamic";
+import { DateTime } from "luxon";
 
 const DEFAULT_CENTER = {
     lat: 51.4,
@@ -23,27 +24,28 @@ const ViewScrap = (props: { params: { id: string }}) => {
     }))
 
     useEffect(() => {
-        getScrap(scrapId).then(r => {
+        getScrapById(scrapId).then(r => {
             setScrap(r);
         })
     }, [scrapId])
 
-    console.log('setScrap', scrap);
-
     return (
-        <div>
+        <div className="w-full">
             <p>{scrap?.description}</p>
-            <Map
-                lat={scrap ? scrap.latitude : DEFAULT_CENTER.lat}
-                lng={scrap ? scrap.longitude: DEFAULT_CENTER.lng}
-            >
-                {scrap && 
-                <Marker 
-                    position={[scrap.latitude, scrap.longitude]}>
-                        <Popup>{scrap.latitude}{scrap.longitude}</Popup>
-                        </Marker>
-                }
-            </Map>
+            <p className="mt-2">Created {DateTime.fromISO(scrap?.createdTime).toRelative()}</p>
+            <div className="mt-2">
+                <Map
+                    lat={scrap ? scrap.latitude : DEFAULT_CENTER.lat}
+                    lng={scrap ? scrap.longitude: DEFAULT_CENTER.lng}
+                >
+                    {scrap && 
+                    <Marker 
+                        position={[scrap.latitude, scrap.longitude]}>
+                            <Popup>{scrap.latitude}{scrap.longitude}</Popup>
+                    </Marker>
+                    }
+                </Map>
+            </div>
         </div>
     )
 }
