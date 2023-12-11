@@ -33,7 +33,7 @@ const ViewScrap = (props: { params: { id: string }}) => {
         <div className="w-full">
             <p>{scrap?.description}</p>
             <p>Somewhere near {scrap?.address}</p>
-            <p className="mt-2">Created {DateTime.fromISO(scrap?.createdTime).toRelative()}</p>
+            <p className="mt-2">Created {DateTime.fromISO(scrap?.createdTime || "").toRelative()}</p>
             <div className="mt-2">
                 <Map
                     lat={scrap ? scrap.latitude : DEFAULT_CENTER.lat}

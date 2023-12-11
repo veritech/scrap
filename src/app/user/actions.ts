@@ -77,6 +77,7 @@ export const getCurrentUser = async (): Promise<UserDto> => {
 
     const store = cookies();
 
+    // @ts-ignore
     const { value } = store.get('user_id');
 
     if (!value) {

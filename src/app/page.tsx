@@ -20,7 +20,7 @@ export default function Home() {
               <div className="rounded-md border border-slate-200 mb-2 w-full">
               <p className="p-4">{scrapItem.description}</p>
               <p className="p-4">{scrapItem.address}</p>
-              <p className="p-4">Created {DateTime.fromISO(scrapItem.createdTime).toRelative()}</p>
+              <p className="p-4">Created {DateTime.fromISO(scrapItem.createdTime || "").toRelative()}</p>
               </div>
             </Link>
           )

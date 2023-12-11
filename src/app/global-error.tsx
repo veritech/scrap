@@ -1,7 +1,9 @@
 'use client'
 
 export default function Error({
+    // @ts-ignore
     error,
+    // @ts-ignore
     reset
 }) {
     return (

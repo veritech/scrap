@@ -23,6 +23,7 @@ export class ScrapItem {
 
     @ManyToOne(() => User, (user) => user.scrapItems)
     @JoinColumn({ name: 'user_id' })
+    // @ts-ignore
     user: Relation<User>;
 
     @CreateDateColumn({ name: 'created_time' })
