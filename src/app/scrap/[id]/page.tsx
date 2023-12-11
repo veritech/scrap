@@ -21,7 +21,7 @@ const ViewScrap = (props: { params: { id: string }}) => {
     const Map = useMemo(() => dynamic(() => import('../../components/open_street_map'), {
         loading: () => (<p>Loading Map...</p>),
         ssr: false
-    }))
+    }), []);
 
     useEffect(() => {
         getScrapById(scrapId).then(r => {
