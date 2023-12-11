@@ -1,5 +1,5 @@
 
-import { validateAndCreateUser } from './actions';
+import { validateAndCreateUser } from '../actions';
 
 const Signup = () => {
 

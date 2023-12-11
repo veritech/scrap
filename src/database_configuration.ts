@@ -9,14 +9,22 @@ const __dirname = path.dirname(__filename);
 import { ScrapItem } from "./entities/ScrapItem";
 import { User } from "./entities/User";
 
+const {
+    PGHOST,
+    PGPORT = '5432',
+    POSTGRES_DB,
+    POSTGRES_USER,
+    POSTGRES_PASSWORD
+} = process.env;
+
 // DataSource
 export const config: DataSourceOptions = {
-    host: "localhost",
-    port: 5432,
-    database: 'scrap',
+    host: PGHOST || "localhost",
+    port: parseInt(PGPORT),
+    database: POSTGRES_DB || 'scrap',
     type: 'postgres',
-    username: 'postgres',
-    password: 'p@ssw0rd',
+    username: POSTGRES_USER || 'postgres',
+    password: POSTGRES_PASSWORD || 'p@ssw0rd',
     synchronize: true,
     entities: [
         ScrapItem,
