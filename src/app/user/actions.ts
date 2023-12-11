@@ -5,6 +5,7 @@ import { getSharedDataSource } from "@/src/shared_database_connection";
 import { cookies } from "next/headers"
 import { UserManager } from "@/src/managers/user_manager";
 import { redirect } from "next/navigation";
+const sg = require("sendgrid/mail");
 
 export interface UserDto {
     id: string
@@ -41,7 +42,27 @@ export const validateAndCreateUser = async (formData: FormData) => {
     const token = userManager.generateValidationToken(user);
 
     // Send email via send grid
-    console.log("token", token);
+    sg.setApiKey(process.env.SEND_GRID_API_KEY);
+
+    const domain = "https://scrap-production-8796.up.railway.app/"
+    const msg = {
+        to: email,
+        from: "jonathan@float-Right.co.uk",
+        subject: "validate email",
+        text: `Use this link to validate your email\n ${domain}user/validate?token=${token}`
+    }
+    
+    console.log("verification token", token);
+    await sg.send(msg)
+        .then(() => {
+            console.log(`Email sent for ${user.id}`);
+        })
+        // @ts-ignore
+        .catch(e => {
+            console.error("email send failed", e);
+
+            throw new Error("unable to send verification email");
+        });
 
     redirect('/user/validate');
 }
