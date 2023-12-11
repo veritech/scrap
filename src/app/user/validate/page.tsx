@@ -1,7 +1,6 @@
 'use client'
 
-import { useParams } from "next/navigation";
-import { validateUserToken } from "./actions";
+import { validateUserToken } from "../actions";
 import { useEffect } from "react";
 
 const Validate = (props: { searchParams: { token: string }}) => {

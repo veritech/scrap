@@ -1,4 +1,3 @@
-
 import { validateAndCreateUser } from '../actions';
 
 const Signup = () => {
@@ -7,9 +6,9 @@ const Signup = () => {
             <form action={validateAndCreateUser}>
                 <div className="mb-3">
                     <label className="form-label">Email address</label>
-                    <input className="form-control" name="email" />
+                    <input className="block border w-96 p-1" name="email" />
                 </div>
-                <button className="btn btn-primary">Signup</button>
+                <button className="border p-2 rounded-md bg-slate-600 text-white">Signup</button>
             </form>
     )
 }
