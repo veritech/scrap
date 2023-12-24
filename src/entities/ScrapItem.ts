@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Relation } from "typeorm"
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 import { User } from "./User";
+import typeorm from "typeorm";
 
 @Entity({ name: "scrap_item" })
 export class ScrapItem {
@@ -23,8 +24,7 @@ export class ScrapItem {
 
     @ManyToOne(() => User, (user) => user.scrapItems)
     @JoinColumn({ name: 'user_id' })
-    // @ts-ignore
-    user: Relation<User>;
+    user: typeorm.Relation<User>;
 
     @CreateDateColumn({ name: 'created_time' })
     createdTime: Date;

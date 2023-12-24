@@ -82,7 +82,6 @@ Scrap App
         .then(() => {
             console.log(`Email sent for ${user.id}`);
         })
-        // @ts-ignore
         .catch(e => {
             console.error("email send failed", e);
 
@@ -167,7 +166,6 @@ Scrap app
         .then(() => {
             console.log(`Login email sent for ${user.id}`);  
         })
-        // @ts-ignore
         .catch(e => {
             console.error("email send failed", e);
 

@@ -66,21 +66,33 @@ export const getScrapById = async (scrapId: string): Promise<ScrapDto> => {
 }
 
 export const addScrap = async (formData: FormData) => {
+    console.log('datasource');
     const dataSource = await getSharedDataSource()
 
     const scrapItemRepo = dataSource.getRepository(ScrapItem);
     const userRepo = dataSource.getRepository(User);
-
+    console.log('repo');
     const cookieStore = cookies();
+
+    console.log('cookies');
 
     const cookie = cookieStore.get('user_id');
     if (!cookie || !cookie.value) {
+        console.log('login failure');
         throw new Error('User is not logged in');
     }
+
+    console.log('fetch form');
 
     const description = formData.get("description");
     const coordinate = formData.get("coordinate");
     const address = formData.get("address");
+
+    console.log('formdata', {
+        coordinate,
+        description,
+        address,
+    })
 
     if (!description || typeof description !== 'string' ||
     !coordinate || typeof coordinate !== 'string' ||
@@ -95,19 +107,28 @@ export const addScrap = async (formData: FormData) => {
 
     const [lat, lng] = coordinate.split(',');
 
+    console.log('findOneByOrFail');
     const user = await userRepo.findOneByOrFail({
         id: cookie.value
     });
 
-    const newScrap = await scrapItemRepo.save({
+    console.log('save');
+    const result = await scrapItemRepo.insert({
         latitude: parseFloatOrThrow(lat),
         longitude: parseFloatOrThrow(lng),
         description,
         address,
         user
+    });
+
+    const newScrap = await scrapItemRepo.findOne({
+        where: {
+            id: result.identifiers[0].id
+        }
     })
 
-    redirect(`/scrap/${newScrap.id}`);
+    console.log('redirect');
+    redirect(`/scrap/${newScrap?.id}`);
 }
 
 interface PostcodeLookupResponse { 
