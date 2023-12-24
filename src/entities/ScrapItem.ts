@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Relation } from "typeorm"
 import { User } from "./User";
 
-@Entity()
+@Entity({ name: "scrap_item" })
 export class ScrapItem {
 
     @PrimaryGeneratedColumn('uuid')

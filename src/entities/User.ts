@@ -1,7 +1,7 @@
 import { CreateDateColumn, Entity, Index, Column, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
 import { ScrapItem } from "./ScrapItem";
 
-@Entity()
+@Entity({ name: "user" })
 export class User {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -16,6 +16,6 @@ export class User {
     @OneToMany(() => ScrapItem, (scrapItem) => scrapItem.user)
     scrapItems: ScrapItem[]
 
-    @CreateDateColumn()
-    created_time: Date;
+    @CreateDateColumn({ name: "created_time"})
+    createdTime: Date;
 }
