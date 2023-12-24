@@ -1,26 +1,27 @@
 'use client'
 
+import { useSearchParams } from "next/navigation";
 import { validateUserToken } from "../actions";
 import { useEffect } from "react";
 
-const Validate = (props: { searchParams: { token: string }}) => {
-    const { searchParams } = props;
+const Validate = () => {
+    const searchParams = useSearchParams();
+    const token = searchParams.get('token');
     
     useEffect(() => {
-        console.log("searchParams", searchParams);
-        if (searchParams.token && typeof searchParams.token === 'string') {
-            validateUserToken(searchParams.token);
+        if (token) {
+            validateUserToken(token);
         }
-    }, [searchParams])
+    }, [token])
 
     return (
         <>
-        {!searchParams.token && (
+        {!token && (
             <div>
                 <p>Please check your email. and use the link in the mail to validate your account</p>
             </div>
         )}
-        {searchParams.token && (
+        {token && (
             <div>
                 <p>Thanks for signing up</p>
             </div>

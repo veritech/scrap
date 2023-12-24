@@ -30,8 +30,11 @@ const mapEntityToDto = (entity: User): UserDto => {
 const sendEmail = async (email: string, text: string) => {
     const key = process.env.SEND_GRID_API_KEY;
     if (!key) {
-        console.log('No SG API key suppied is disabled');
+        console.log("===========");
+        console.log('No SG API key suppied so email sending is disabled');
+        console.log("===========");
         console.log(text);
+        console.log("===========");
 
         return Promise.resolve();
     }
@@ -90,6 +93,7 @@ Scrap App
 }
 
 export const loginUser = async (user: User): Promise<User> => {
+    console.log(`loginUser ${user.id}`)
     const store = cookies();
 
     if (user) {
@@ -161,7 +165,7 @@ Thanks
 Scrap app
 `)
         .then(() => {
-            console.log(`Email sent for ${user.id}`);
+            console.log(`Login email sent for ${user.id}`);  
         })
         // @ts-ignore
         .catch(e => {
@@ -169,4 +173,6 @@ Scrap app
 
             throw new Error("unable to send verification email");
         });
+
+    redirect(`/user/sent-email/${user.id}`);
 }
