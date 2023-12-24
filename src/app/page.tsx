@@ -27,7 +27,7 @@ export default function Home() {
         })}
         {scrapItems.length === 0 &&
         <div className="text-center">
-          <p >No scrap is available</p>
+          <p>No scrap is available</p>
         </div>
         }
       </div>
