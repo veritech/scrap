@@ -7,6 +7,7 @@ const Validate = (props: { searchParams: { token: string }}) => {
     const { searchParams } = props;
     
     useEffect(() => {
+        console.log("searchParams", searchParams);
         if (searchParams.token && typeof searchParams.token === 'string') {
             validateUserToken(searchParams.token);
         }

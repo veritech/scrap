@@ -7,6 +7,9 @@ import { UserManager } from "@/src/managers/user_manager";
 import { redirect } from "next/navigation";
 const sg = require("@sendgrid/mail");
 
+const domain = process.env.PUBLIC_DOMAIN || 
+"https://scrap-production-8796.up.railway.app/";
+
 export interface UserDto {
     id: string
     email: string
@@ -24,21 +27,26 @@ const mapEntityToDto = (entity: User): UserDto => {
     }
 }
 
-const domain = "https://scrap-production-8796.up.railway.app/"
-
 const sendEmail = async (email: string, text: string) => {
+    const key = process.env.SEND_GRID_API_KEY;
+    if (!key) {
+        console.log('No SG API key suppied is disabled');
+        console.log(text);
+
+        return Promise.resolve();
+    }
+
     // Send email via send grid
     sg.setApiKey(process.env.SEND_GRID_API_KEY);
 
-    
     const msg = {
         to: email,
         from: "jonathan@float-Right.co.uk",
         subject: "validate email",
         text
     }
-    
-    return await sg.send(msg)
+
+    return await sg.send(msg);
 }
 
 export const validateAndCreateUser = async (formData: FormData) => {
@@ -59,7 +67,15 @@ export const validateAndCreateUser = async (formData: FormData) => {
 
     console.log("verification token", token);
 
-    await sendEmail(email, `Use this link to validate your email\n ${domain}user/validate?token=${token}`)
+    await sendEmail(email, `
+Hi!
+
+You need to validate your email.
+Use this link to validate your email\n ${domain}user/validate?token=${token}
+
+Thanks
+Scrap App
+`)
         .then(() => {
             console.log(`Email sent for ${user.id}`);
         })
@@ -104,17 +120,17 @@ export const getCurrentUser = async (): Promise<UserDto> => {
 
     const store = cookies();
 
-    // @ts-ignore
-    const { value } = store.get('user_id');
+    console.log('store', store);
 
-    if (!value) {
-        throw new Error("No user found")
+    const cookie = store.get('user_id');
+    if (!cookie || !cookie.value) {
+        throw new Error("No current user found")
     }
 
     const userRepository = datasource.getRepository(User);
 
     return userRepository.findOneByOrFail({
-        id: value
+        id: cookie.value
     }).then(r => mapEntityToDto(r));
 }
 
@@ -136,7 +152,14 @@ export const validateUserAndSendEmail = async (formData: FormData) => {
 
     console.log("login token", token);
 
-    await sendEmail(email, `Use this link to login \n ${domain}user/login?token=${token}`)
+    await sendEmail(email, `
+Hi!
+
+Please use this link to login \n ${domain}user/login?token=${token}
+
+Thanks
+Scrap app
+`)
         .then(() => {
             console.log(`Email sent for ${user.id}`);
         })

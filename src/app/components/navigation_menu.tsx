@@ -15,7 +15,7 @@ const NavMenu = () => {
         .catch(() => {
             setCurrentUser(null);
         })
-    },[setCurrentUser] )
+    },[]);
 
     return (
         <div className="bg-slate-600 p-4 text-white">

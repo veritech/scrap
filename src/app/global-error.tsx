@@ -1,11 +1,12 @@
 'use client'
 
-export default function Error({
-    // @ts-ignore
+const Error = ({
     error,
-    // @ts-ignore
     reset
-}) {
+}: {
+    error: Error & { digest?: string }
+    reset: () => void
+  }) {
     return (
         <div>
             Something went wrong
@@ -14,3 +15,5 @@ export default function Error({
         </div>
     )
 }
+
+export default Error;
