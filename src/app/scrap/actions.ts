@@ -85,6 +85,11 @@ export const addScrap = async (formData: FormData) => {
     if (!description || typeof description !== 'string' ||
     !coordinate || typeof coordinate !== 'string' ||
     !address || typeof address !== 'string') {
+        console.log('data', {
+            coordinate,
+            description,
+            address,
+        })
         throw new Error('Invalid input');
     }
 
